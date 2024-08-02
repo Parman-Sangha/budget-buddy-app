@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Aura",
-    "slug": "Aura",
-    "scheme": "Aura",
+    "name": "budget",
+    "slug": "budget",
+    "scheme": "budget",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
