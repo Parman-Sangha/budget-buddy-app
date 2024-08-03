@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 
 const Overview = ({ navigation }) => {
-};
-const Home = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Overview</Text>
