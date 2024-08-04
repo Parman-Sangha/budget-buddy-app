@@ -2,6 +2,33 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 
 const Overview = ({ navigation }) => {
+  const [income, setIncome] = useState("");
+  const [expense, setExpense] = useState("");
+  const [totalIncome, setTotalIncome] = useState(2000);
+  const [totalExpense, setTotalExpense] = useState(50);
+  const [totalBalance, setTotalBalance] = useState(2000 - 50);
+
+  const handleAddIncome = () => {
+    const incomeValue = parseFloat(income);
+    if (isNaN(incomeValue) || incomeValue <= 0) {
+      Alert.alert("Invalid Income", "Please enter a valid income amount.");
+      return;
+    }
+    setTotalIncome((prevIncome) => prevIncome + incomeValue);
+    setTotalBalance((prevBalance) => prevBalance + incomeValue);
+    setIncome("");
+  };
+
+  const handleAddExpense = () => {
+    const expenseValue = parseFloat(expense);
+    if (isNaN(expenseValue) || expenseValue <= 0) {
+      Alert.alert("Invalid Expense", "Please enter a valid expense amount.");
+      return;
+    }
+    setTotalExpense((prevExpense) => prevExpense + expenseValue);
+    setTotalBalance((prevBalance) => prevBalance - expenseValue);
+    setExpense("");
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Overview</Text>
