@@ -1,5 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ScrollView,
+  Alert,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const Transaction = () => {
   const navigation = useNavigation();
