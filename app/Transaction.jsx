@@ -10,8 +10,55 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const Transaction = () => {
+const AddTransaction = () => {
   const navigation = useNavigation();
+  const [type, setType] = useState("");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState("");
+  const [category, setCategory] = useState("");
+  const [notes, setNotes] = useState("");
+
+  const handleAddTransaction = () => {
+    const amountValue = parseFloat(amount);
+    if (
+      type === "" ||
+      isNaN(amountValue) ||
+      amountValue <= 0 ||
+      description === "" ||
+      date === "" ||
+      category === ""
+    ) {
+      Alert.alert(
+        "Invalid Input",
+        "Please fill out all fields with valid data."
+      );
+      return;
+    }
+
+    const newTransaction = {
+      type,
+      amount: amountValue,
+      description,
+      date,
+      category,
+      notes,
+    };
+
+    Alert.alert(
+      "Transaction Added",
+      "Your transaction has been added successfully."
+    );
+    navigation.goBack();
+
+    setType("");
+    setAmount("");
+    setDescription("");
+    setDate("");
+    setCategory("");
+    setNotes("");
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Add Transaction</Text>
