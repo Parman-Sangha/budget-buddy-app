@@ -31,9 +31,9 @@ const BudgetGoals = () => {
       setProgress(0);
     }
   }, [totalIncome, totalExpense, currentGoal]);
-};
-return (
-  <View style={styles.container}>
+
+ return (
+    <View style={styles.container}>
     <Text style={styles.title}>Budget Goals</Text>
     <View style={styles.formGroup}>
       <Text style={styles.label}>Set Your Goal</Text>
@@ -63,8 +63,9 @@ return (
         ))}
       </View>
     </View>
-  </View>
-);
+    </View>
+  );
+};
 
 export default BudgetGoals;
 const styles = StyleSheet.create({
