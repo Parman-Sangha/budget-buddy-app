@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
 const BudgetGoals = () => {
+
   const navigation = useNavigation();
   const [goal, setGoal] = useState('');
   const [currentGoal, setCurrentGoal] = useState(0);
@@ -9,25 +11,62 @@ const BudgetGoals = () => {
   const [totalExpense, setTotalExpense] = useState(500); 
   const [progress, setProgress] = useState(0);
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Budget Goals</Text>
-      <View style={styles.formGroup}>
-        <Text style={styles.label}>Set Your Goal</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your goal"
-          keyboardType="numeric"
-          value={goal}
-          onChangeText={setGoal}
-        />
-        <TouchableOpacity style={styles.button} onPress={() => { /* handleSetGoal logic */ }}>
-          <Text style={styles.buttonText}>Set Goal</Text>
-        </TouchableOpacity>
+  const handleSetGoal = () => {
+    const goalValue = parseFloat(goal);
+    if (isNaN(goalValue) || goalValue <= 0) {
+      Alert.alert('Invalid Goal', 'Please enter a valid goal amount.');
+      return;
+    }
+    setCurrentGoal(goalValue);
+    setGoal('');
+    setProgress(0);
+  };
+  
+  useEffect(() => {
+    if (currentGoal > 0) {
+      const netSavings = totalIncome - totalExpense;
+      const progressPercentage = (netSavings / currentGoal) * 100;
+      setProgress(progressPercentage > 100 ? 100 : progressPercentage);
+    } else {
+      setProgress(0);
+    }
+  }, [totalIncome, totalExpense, currentGoal]);
+};
+return (
+  <View style={styles.container}>
+    <Text style={styles.title}>Budget Goals</Text>
+    <View style={styles.formGroup}>
+      <Text style={styles.label}>Set Your Goal</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter your goal"
+        keyboardType="numeric"
+        value={goal}
+        onChangeText={setGoal}
+      />
+      <TouchableOpacity style={styles.button} onPress={handleSetGoal}>
+        <Text style={styles.buttonText}>Set Goal</Text>
+      </TouchableOpacity>
+    </View>
+    <View style={styles.progressContainer}>
+      <Text style={styles.progressTitle}>Current Goal: ${currentGoal.toFixed(2)}</Text>
+      <Text style={styles.progressText}>Progress: {progress.toFixed(2)}%</Text>
+      <View style={styles.progressBar}>
+        {[...Array(10)].map((_, index) => (
+          <View
+            key={index}
+            style={[
+              styles.progressSegment,
+              progress > index * 10 ? styles.progressActive : styles.progressInactive,
+            ]}
+          />
+        ))}
       </View>
     </View>
-  );
-};
+  </View>
+);
+
+export default BudgetGoals;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
